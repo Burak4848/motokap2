@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /modeller/altinci-model/
+
+Sitemap: https://motokap.com/sitemap.xml

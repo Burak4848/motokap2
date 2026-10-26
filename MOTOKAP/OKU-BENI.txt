@@ -1,0 +1,29 @@
+MOTOKAP — Site teslim paketi
+Tarih: 15 Ekim 2026
+
+DOSYALAR
+public/ klasörü sitenin yayınlanabilir HTML, CSS, JavaScript ve optimize WebP/SVG görsellerini içerir. Dosyalar okunabilir kaynak biçimindedir; build adımı veya paket kurulumu yoktur.
+
+YAYINLAMA
+1. public/ klasörünün içeriğini statik dosya sunabilen hostingin web köküne yükleyin. Örneğin public_html/ klasörüne public klasörünü değil, onun içindekileri kopyalayın.
+2. index.html ana sayfadır. Diğer sayfalar kendi klasörlerindeki index.html dosyalarıyla çalışır.
+3. Site kök dizinde yayınlanmalıdır. /assets/, /site.css ve /modeller/... bağlantıları köke göre yazılmıştır. ZIP içinden HTML'ye çift tıklayarak açmak doğru önizleme sağlamaz.
+4. HTTPS etkinleştirin. motokap.com ve www yönlendirmelerini seçilen hostinge göre DNS üzerinden ayarlayın; bu pakette DNS erişimi ya da barındırma hesabı bulunmaz.
+5. Mevcut canonical, Open Graph ve yapılandırılmış veri adresleri https://motokap-garaj.snowylion32.chatgpt.site tabanını kullanıyor. Gerçek alan adıyla yayınlamadan önce bu adresleri HTML dosyaları, runtime.js, content.js, sitemap.xml ve robots.txt içinde https://motokap.com ile tutarlı biçimde güncelleyin.
+6. Sayfaları, modelleri, mobil menüyü, fotoğraf kaydırmayı/büyütmeyi, SSS'yi, telefon, yol tarifi ve WhatsApp bağlantılarını kontrol edin. Gerçek mobil cihaz performans testi henüz yapılmadı.
+
+ÇALIŞMA ŞEKLİ
+Site ürün ve fiyat kataloğudur. Sipariş düğmeleri 0533 240 38 88 numarasının WhatsApp ekranını açar. Sitede çevrim içi ödeme, sipariş veritabanı, stok sistemi veya müşteri hesabı yoktur. Bu mevcut akış için ayrı bir backend zorunlu değildir.
+
+DÜZENLEME
+- public/content.js: model bilgileri, fiyatlar, görseller, iletişim, ölçüm kimlikleri.
+- public/index.html ve public/modeller/*/index.html: görünür ürün metinleri, fiyatlar, fotoğraf galerileri ve SEO verileri de statik olarak bulunur. content.js tek başına bütün HTML/SEO içeriğini güncellemez; ilgili HTML ve JSON-LD verileri de eşlenmelidir.
+- public/site.css: tasarım ve mobil kurallar.
+- public/runtime.js ve sales.js: galeri, menü, WhatsApp, SSS ve izinli ölçüm davranışları.
+
+TAMAMLANACAKLAR
+ÖLÇÜM (ÇEREZ İZNİ + ETKİLEŞİM TAKİBİ)
+public/content.js içindeki analytics bölümüne kimlikleri girin: ga4Id (G-XXXXXXX), metaPixelId (rakamlar), clarityId (Microsoft Clarity proje kodu). Kimlik girilince ilk ziyarette çerez paneli otomatik açılır. İzin verilmezse hiçbir ölçüm scripti yüklenmez; izin geri çekilirse ölçüm çerezleri silinir.
+Ölçülen olaylar: product_view, whatsapp_click, phone_click, form_start, form_submit, gallery_step, gallery_swipe, lightbox_open, filter_use, faq_open, nav_click, social_click, directions_click, scroll_depth (25/50/75/90), engaged_time (15/30/60/120 sn), section_view. Clarity ısı haritası ve oturum kaydı sağlar. Canlıda GA4 DebugView / Meta Pixel Helper / Clarity panelinden doğrulayın. WhatsApp tıklaması tamamlanmış satış olarak ölçülmez.
+Gizlilik/KVKK/çerez/sipariş sayfaları taslak içerikler taşır; işletmenin gerçek bilgileri ve satış koşullarıyla tamamlanmalıdır. Altıncı model şablonu henüz tamamlanmadığından ana katalogda gösterilmez.
+SSL, DNS, gerçek cihaz testi ve Google Search Console kurulumu ayrı yayın adımlarıdır. Bu ZIP sunucuda çalışan bir veritabanı veya gizli anahtar içermez.

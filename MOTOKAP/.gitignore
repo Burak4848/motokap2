@@ -1,0 +1,22 @@
+# İşletim sistemi dosyaları
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editör ve IDE ayarları
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Vercel geçici dosyaları
+.vercel
+
+# Node / Paketler (kullanılırsa)
+node_modules/
+npm-debug.log*
+
+# Yedek ve geçici dosyalar
+*.bak
+*_backup*
+*~

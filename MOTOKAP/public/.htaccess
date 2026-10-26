@@ -1,0 +1,88 @@
+# ==============================================================================
+# MOTOKAP Production Server Configuration (.htaccess for Apache & LiteSpeed)
+# ==============================================================================
+
+# 1. CHARSET & MIME TYPES
+AddDefaultCharset UTF-8
+AddType image/webp .webp
+AddType image/svg+xml .svg
+AddType application/manifest+json .webmanifest .json
+
+# 2. REWRITE RULES (HTTPS & CANONICAL DOMAIN)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Force HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Canonical domain (www to non-www: www.motokap.com -> motokap.com)
+  RewriteCond %{HTTP_HOST} ^www\.motokap\.com$ [NC]
+  RewriteRule ^(.*)$ https://motokap.com/$1 [L,R=301]
+</IfModule>
+
+# 3. SECURITY HEADERS
+<IfModule mod_headers.c>
+  # Protect against MIME type sniffing
+  Header always set X-Content-Type-Options "nosniff"
+
+  # Protect against Clickjacking
+  Header always set X-Frame-Options "SAMEORIGIN"
+
+  # Referrer policy
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # Restrict dangerous browser features
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+
+  # Strict Transport Security (HSTS - 1 year)
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+  # Content Security Policy (allows self, and GA4 / Meta Pixel / Microsoft Clarity if consent given)
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net https://www.clarity.ms; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://www.facebook.com https://*.clarity.ms; font-src 'self'; frame-ancestors 'self';"
+
+  # Caching headers for static assets
+  <FilesMatch "\.(webp|svg|css|js)$">
+    Header set Cache-Control "max-age=31536000, public, immutable"
+  </FilesMatch>
+
+  <FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+  </FilesMatch>
+</IfModule>
+
+# 4. GZIP / DEFLATE COMPRESSION
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+  AddOutputFilterByType DEFLATE application/javascript text/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml application/xml
+</IfModule>
+
+# 5. BROWSER CACHING (EXPIRES)
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 month"
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType application/manifest+json "access plus 1 week"
+</IfModule>
+
+# 6. DIRECTORY & FILE PROTECTION
+Options -Indexes
+
+# Block hidden files and directories (starting with a dot, except .well-known for SSL)
+<IfModule mod_rewrite.c>
+  RewriteRule "(^|/)\.(?!well-known)" - [F]
+</IfModule>
+
+# Block access to backup and sensitive source files
+<FilesMatch "(^#.*#|\.(bak|conf|dist|fla|in[ci]|log|psd|sh|sql|sw[op])|~)$">
+  Require all denied
+</FilesMatch>

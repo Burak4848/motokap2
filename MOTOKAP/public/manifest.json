@@ -1,0 +1,16 @@
+{
+  "name": "MOTOKAP · Katlanır Motosiklet Garajı",
+  "short_name": "MOTOKAP",
+  "description": "Miflonlu deri kumaş, CNC çelik mekanizma ve yerli üretim katlanır motor garajı.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#eeece6",
+  "theme_color": "#202a2e",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
