@@ -43,8 +43,12 @@ AddType application/manifest+json .webmanifest .json
   Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net https://www.clarity.ms; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://www.facebook.com https://*.facebook.com https://facebook.com https://connect.facebook.net https://*.fbcdn.net https://*.clarity.ms; font-src 'self'; frame-src 'self' https://www.facebook.com https://*.facebook.com; frame-ancestors 'self';"
 
   # Caching headers for static assets
-  <FilesMatch "\.(webp|svg|css|js)$">
+  <FilesMatch "\.(webp|svg|png|jpe?g|gif|ico|woff2?|ttf|eot)$">
     Header set Cache-Control "max-age=31536000, public, immutable"
+  </FilesMatch>
+
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "max-age=3600, public, must-revalidate"
   </FilesMatch>
 
   <FilesMatch "\.(html|htm)$">
@@ -66,9 +70,9 @@ AddType application/manifest+json .webmanifest .json
   ExpiresActive On
   ExpiresDefault "access plus 1 month"
   ExpiresByType text/html "access plus 0 seconds"
-  ExpiresByType text/css "access plus 1 year"
-  ExpiresByType text/javascript "access plus 1 year"
-  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/css "access plus 1 hour"
+  ExpiresByType text/javascript "access plus 1 hour"
+  ExpiresByType application/javascript "access plus 1 hour"
   ExpiresByType image/webp "access plus 1 year"
   ExpiresByType image/svg+xml "access plus 1 year"
   ExpiresByType application/manifest+json "access plus 1 week"

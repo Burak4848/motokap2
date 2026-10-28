@@ -45,9 +45,14 @@ server {
     gzip_types text/plain text/css application/json application/javascript text/xml application/xml image/svg+xml;
 
     # Static Assets Caching
-    location ~* \.(webp|svg|css|js)$ {
+    location ~* \.(webp|svg)$ {
         expires 1y;
         add_header Cache-Control "public, immutable";
+    }
+
+    location ~* \.(css|js)$ {
+        expires 1h;
+        add_header Cache-Control "public, must-revalidate";
     }
 
     # HTML files
