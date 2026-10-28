@@ -254,9 +254,23 @@ body.has-cookie-panel .whatsapp-float {
   display: none !important;
 }
 
-/* Global Gallery Image Stabilization (prevents accidental trackpad/mouse dragging jitter) */
+/* Global Image Stabilization & Anti-drag (Images fixed, no jitter, no ghost drag, pure pan-y scroll) */
+img {
+  -webkit-user-drag: none !important;
+  -khtml-user-drag: none !important;
+  -moz-user-drag: none !important;
+  -o-user-drag: none !important;
+  user-drag: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
 .card-gallery {
+  overflow: hidden !important;
   overflow-x: hidden !important;
+  overflow-y: hidden !important;
+  scroll-snap-type: none !important;
   touch-action: pan-y !important;
   user-select: none !important;
   -webkit-user-select: none !important;
