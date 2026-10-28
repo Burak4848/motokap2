@@ -101,27 +101,28 @@ h2{font-family:"Avenir Next","Segoe UI",Arial,sans-serif;letter-spacing:-1.9px;f
 /* Override legacy .brand img rules that hid and offset the current logo. */
 header .brand img.brand-mark,footer .brand img.brand-mark{display:block!important;position:static!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:none!important;left:auto!important;top:auto!important;object-fit:contain;opacity:1;visibility:visible;mix-blend-mode:normal}header .brand img.brand-mark{filter:none}footer .brand img.brand-mark{filter:invert(1)}
 
-
 /* ==========================================================================
    MOBILE & TOUCH OPTIMIZATIONS (2026 EDITION)
-   Header, Photo Sizes, Gallery, Cookie Consent, Vercel & Touch Targets
+   Stabilized Images, Larger Cookie Notice & Optimized Mobile Typography
    ========================================================================== */
 
-/* 1. Cookie Consent Banner (Clean bottom floating banner on mobile & desktop) */
+/* 1. Cookie Consent Banner (Larger, prominent & readable on mobile & desktop) */
 .cookie-panel {
   position: fixed !important;
   left: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
   z-index: 10000 !important;
-  background: #1c2428 !important;
+  background: #171f23 !important;
   color: #ffffff !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
-  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5) !important;
-  padding: 16px 20px calc(16px + env(safe-area-inset-bottom, 0px)) !important;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.22) !important;
+  border-top-left-radius: 18px !important;
+  border-top-right-radius: 18px !important;
+  box-shadow: 0 -12px 36px rgba(0, 0, 0, 0.6) !important;
+  padding: 22px 20px calc(22px + env(safe-area-inset-bottom, 0px)) !important;
   display: flex !important;
   flex-direction: column !important;
-  gap: 12px !important;
+  gap: 14px !important;
   max-width: 100% !important;
   animation: slideUpCookie 0.28s ease-out !important;
 }
@@ -132,46 +133,49 @@ header .brand img.brand-mark,footer .brand img.brand-mark{display:block!importan
 }
 
 .cookie-content strong {
-  font-size: 15px !important;
-  font-weight: 700 !important;
+  font-size: 19px !important;
+  font-weight: 750 !important;
   display: block !important;
-  margin-bottom: 4px !important;
+  margin-bottom: 8px !important;
   color: #ffffff !important;
-  letter-spacing: -0.2px !important;
+  letter-spacing: -0.3px !important;
+  line-height: 1.35 !important;
 }
 
 .cookie-content p {
-  font-size: 13px !important;
-  line-height: 1.5 !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
   margin: 0 !important;
-  color: #d1d8dc !important;
+  color: #dbe3e8 !important;
 }
 
 .cookie-content a {
   color: #ff9d66 !important;
   text-decoration: underline !important;
   font-weight: 600 !important;
+  font-size: 15px !important;
 }
 
 .cookie-actions {
   display: flex !important;
-  gap: 10px !important;
+  gap: 12px !important;
   width: 100% !important;
+  margin-top: 4px !important;
 }
 
 .cookie-actions .button {
   flex: 1 !important;
-  padding: 12px 14px !important;
-  font-size: 13px !important;
+  padding: 13px 16px !important;
+  font-size: 15px !important;
   font-weight: 700 !important;
-  border-radius: 8px !important;
+  border-radius: 10px !important;
   text-align: center !important;
-  min-height: 46px !important;
+  min-height: 48px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   cursor: pointer !important;
-  transition: opacity 0.18s !important;
+  transition: opacity 0.18s, transform 0.18s !important;
 }
 
 .cookie-actions .button:active {
@@ -186,7 +190,7 @@ header .brand img.brand-mark,footer .brand img.brand-mark{display:block!importan
 
 .cookie-actions .button.outline {
   background: transparent !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.4) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.45) !important;
   color: #ffffff !important;
 }
 
@@ -195,14 +199,28 @@ header .brand img.brand-mark,footer .brand img.brand-mark{display:block!importan
     left: 24px !important;
     right: auto !important;
     bottom: 24px !important;
-    max-width: 440px !important;
-    border-radius: 14px !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    max-width: 480px !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    padding: 24px 24px !important;
+  }
+
+  .cookie-content strong {
+    font-size: 18.5px !important;
+  }
+
+  .cookie-content p {
+    font-size: 14.5px !important;
+  }
+
+  .cookie-actions .button {
+    font-size: 14.5px !important;
+    min-height: 46px !important;
   }
 }
 
 body.has-cookie-panel .whatsapp-float {
-  bottom: calc(145px + env(safe-area-inset-bottom, 0px)) !important;
+  bottom: calc(185px + env(safe-area-inset-bottom, 0px)) !important;
   transition: bottom 0.25s ease !important;
 }
 
@@ -234,6 +252,14 @@ body.has-cookie-panel .whatsapp-float {
 
 .whatsapp-float span {
   display: none !important;
+}
+
+/* Global Gallery Image Stabilization (prevents accidental trackpad/mouse dragging jitter) */
+.card-gallery {
+  overflow-x: hidden !important;
+  touch-action: pan-y !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
 }
 
 /* 3. Comprehensive Mobile Styles (Screen width <= 768px) */
@@ -281,7 +307,7 @@ body.has-cookie-panel .whatsapp-float {
     min-width: 44px !important;
     min-height: 44px !important;
     padding: 8px 14px !important;
-    font-size: 13px !important;
+    font-size: 13.5px !important;
     font-weight: 700 !important;
     border: 1.5px solid #5a645d !important;
     border-radius: 8px !important;
@@ -312,12 +338,12 @@ body.has-cookie-panel .whatsapp-float {
   }
 
   header nav.mobile-open a {
-    padding: 13px 14px !important;
-    font-size: 15px !important;
+    padding: 14px 16px !important;
+    font-size: 16px !important;
     font-weight: 600 !important;
     border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
     color: #20231f !important;
-    min-height: 46px !important;
+    min-height: 48px !important;
     display: flex !important;
     align-items: center !important;
     border-radius: 6px !important;
@@ -327,11 +353,23 @@ body.has-cookie-panel .whatsapp-float {
     background: rgba(0, 0, 0, 0.04) !important;
   }
 
-  /* Typography & Layout */
+  /* Typography & Layout Optimization */
   .wrap {
     width: 92% !important;
     max-width: 100% !important;
-    padding: 0 2px !important;
+    padding: 0 4px !important;
+  }
+
+  section {
+    padding: 38px 0 !important;
+  }
+
+  .eyebrow {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1.5px !important;
+    display: block !important;
+    margin-bottom: 8px !important;
   }
 
   .hero {
@@ -341,19 +379,20 @@ body.has-cookie-panel .whatsapp-float {
   }
 
   .hero h1 {
-    font-size: clamp(28px, 8.5vw, 38px) !important;
-    line-height: 1.12 !important;
+    font-size: clamp(30px, 8.5vw, 40px) !important;
+    line-height: 1.16 !important;
     letter-spacing: -1.2px !important;
-    margin: 14px 0 10px !important;
+    font-weight: 700 !important;
+    margin: 14px 0 12px !important;
     word-break: break-word !important;
   }
 
   .hero p {
-    font-size: 15px !important;
-    line-height: 1.55 !important;
-    color: #4e5652 !important;
+    font-size: 15.5px !important;
+    line-height: 1.65 !important;
+    color: #434c48 !important;
     max-width: 100% !important;
-    margin: 0 0 16px !important;
+    margin: 0 0 18px !important;
   }
 
   .hero .actions {
@@ -366,9 +405,10 @@ body.has-cookie-panel .whatsapp-float {
 
   .hero .actions .button {
     width: 100% !important;
-    min-height: 48px !important;
-    border-radius: 8px !important;
-    font-size: 14px !important;
+    min-height: 50px !important;
+    border-radius: 10px !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
     justify-content: center !important;
   }
 
@@ -376,33 +416,35 @@ body.has-cookie-panel .whatsapp-float {
     display: flex !important;
     flex-wrap: wrap !important;
     gap: 8px 12px !important;
-    font-size: 12px !important;
+    font-size: 12.5px !important;
+    font-weight: 600 !important;
     margin-top: 10px !important;
   }
 
-  /* Hero Photo on Mobile */
+  /* Stabilized Hero Photo (No forced 4/3 aspect-ratio cut-off) */
   .hero-photo {
     border-radius: 12px !important;
     overflow: hidden !important;
-    background: #e2dfd6 !important;
+    background: #202a2e !important;
     width: 100% !important;
-    margin-top: 8px !important;
+    margin-top: 10px !important;
+    position: relative !important;
   }
 
   .hero-photo img {
     width: 100% !important;
     height: auto !important;
-    aspect-ratio: 4/3 !important;
-    max-height: 310px !important;
+    max-height: 480px !important;
     object-fit: contain !important;
     display: block !important;
+    background: transparent !important;
   }
 
   .photo-label {
     bottom: 10px !important;
     left: 10px !important;
     padding: 6px 12px !important;
-    font-size: 10px !important;
+    font-size: 10.5px !important;
     font-weight: 700 !important;
     border-radius: 4px !important;
   }
@@ -411,7 +453,7 @@ body.has-cookie-panel .whatsapp-float {
   .trust {
     display: grid !important;
     grid-template-columns: 1fr !important;
-    gap: 12px !important;
+    gap: 10px !important;
     padding: 18px 0 !important;
     border-top: 1px solid var(--line) !important;
     border-bottom: 1px solid var(--line) !important;
@@ -420,42 +462,44 @@ body.has-cookie-panel .whatsapp-float {
   .trust > div {
     display: flex !important;
     flex-direction: column !important;
-    gap: 2px !important;
-    padding: 6px 0 !important;
+    gap: 3px !important;
+    padding: 8px 0 !important;
   }
 
   .trust strong {
-    font-size: 15px !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: #1c2428 !important;
   }
 
   .trust span {
-    font-size: 13px !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    color: #53605a !important;
   }
 
   /* Section Headings */
-  section {
-    padding: 40px 0 !important;
-  }
-
   .section-head {
     display: block !important;
     margin-bottom: 22px !important;
   }
 
-  h2 {
-    font-size: clamp(24px, 6.8vw, 32px) !important;
-    line-height: 1.15 !important;
+  h2, .section-head h2 {
+    font-size: clamp(26px, 7.2vw, 34px) !important;
+    line-height: 1.2 !important;
     letter-spacing: -0.8px !important;
+    font-weight: 700 !important;
     margin: 8px 0 10px !important;
   }
 
   .section-head p {
-    font-size: 14px !important;
+    font-size: 15px !important;
     line-height: 1.6 !important;
+    color: #4b5550 !important;
     max-width: 100% !important;
   }
 
-  /* Filters Horizontal Scroll */
+  /* Filters */
   .filters {
     display: flex !important;
     gap: 8px !important;
@@ -473,12 +517,13 @@ body.has-cookie-panel .whatsapp-float {
   .filter {
     flex-shrink: 0 !important;
     padding: 10px 18px !important;
-    font-size: 13px !important;
+    font-size: 14px !important;
     font-weight: 600 !important;
     border-radius: 24px !important;
+    min-height: 44px !important;
   }
 
-  /* Models: Single Column On Mobile */
+  /* Models: Single Column & Stabilized Photos on Mobile */
   .models {
     display: grid !important;
     grid-template-columns: 1fr !important;
@@ -504,17 +549,22 @@ body.has-cookie-panel .whatsapp-float {
     border-radius: 10px !important;
     overflow: hidden !important;
     background: #eceae3 !important;
+    touch-action: pan-y !important;
   }
 
+  /* Fixed & Stable Photo Gallery: No accidental wiggling or sliding on vertical scroll */
   .card-gallery {
     width: 100% !important;
     aspect-ratio: 4/3 !important;
     height: auto !important;
-    max-height: 285px !important;
-    overflow-x: auto !important;
+    max-height: 290px !important;
+    overflow-x: hidden !important;
     scroll-snap-type: x mandatory !important;
     display: flex !important;
     scrollbar-width: none !important;
+    touch-action: pan-y !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
   }
 
   .card-gallery::-webkit-scrollbar {
@@ -524,18 +574,21 @@ body.has-cookie-panel .whatsapp-float {
   .card-slide {
     flex: 0 0 100% !important;
     width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
     height: 100% !important;
-    min-width: 0 !important;
     scroll-snap-align: start !important;
+    box-sizing: border-box !important;
   }
 
   .card-slide img {
     width: 100% !important;
     height: 100% !important;
     aspect-ratio: 4/3 !important;
-    max-height: 285px !important;
+    max-height: 290px !important;
     object-fit: contain !important;
     display: block !important;
+    pointer-events: none !important;
   }
 
   .gallery-ui {
@@ -556,14 +609,14 @@ body.has-cookie-panel .whatsapp-float {
     min-height: 44px !important;
     font-size: 24px !important;
     border-radius: 50% !important;
-    background: rgba(32, 42, 46, 0.85) !important;
+    background: rgba(32, 42, 46, 0.88) !important;
     color: #ffffff !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.45) !important;
     pointer-events: auto !important;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
     cursor: pointer !important;
   }
 
@@ -571,24 +624,33 @@ body.has-cookie-panel .whatsapp-float {
     position: absolute !important;
     top: 10px !important;
     right: 10px !important;
-    background: rgba(32, 42, 46, 0.8) !important;
+    background: rgba(32, 42, 46, 0.82) !important;
     color: #ffffff !important;
     padding: 4px 10px !important;
-    font-size: 11px !important;
+    font-size: 11.5px !important;
     font-weight: 700 !important;
     border-radius: 12px !important;
   }
 
-  .model h3 {
-    font-size: 22px !important;
+  .product-brand {
+    font-size: 11px !important;
+    letter-spacing: 1.8px !important;
     font-weight: 700 !important;
-    margin: 14px 0 6px !important;
+    color: #5c6860 !important;
+    margin-bottom: 6px !important;
+  }
+
+  .model h3, .product-model {
+    font-size: 23px !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    margin: 4px 0 8px !important;
   }
 
   .model p {
-    font-size: 14px !important;
-    line-height: 1.5 !important;
-    color: #5a645d !important;
+    font-size: 14.5px !important;
+    line-height: 1.55 !important;
+    color: #4e5752 !important;
     min-height: auto !important;
     margin-bottom: 12px !important;
   }
@@ -613,12 +675,13 @@ body.has-cookie-panel .whatsapp-float {
   }
 
   .measure span {
-    font-size: 11px !important;
-    color: #72766c !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: #66706a !important;
   }
 
   .price {
-    font-size: 22px !important;
+    font-size: 24px !important;
     font-weight: 800 !important;
     color: #d74c24 !important;
     margin: 8px 0 12px !important;
@@ -633,13 +696,124 @@ body.has-cookie-panel .whatsapp-float {
 
   .card-actions .button {
     width: 100% !important;
-    min-height: 46px !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    border-radius: 6px !important;
+    min-height: 48px !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
     text-align: center !important;
     padding: 10px 8px !important;
     justify-content: center !important;
+  }
+
+  /* Daily Usage Gallery (MOTOKAP, günlük kullanımda): Stabilized 100% full cards, no horizontal jitter or half images */
+  .gallery-row {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-auto-flow: row !important;
+    gap: 20px !important;
+    overflow: visible !important;
+    scroll-snap-type: none !important;
+    padding: 10px 0 20px !important;
+  }
+
+  .gallery-row .gallery-photo {
+    width: 100% !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    border: 1px solid #b8c0b8 !important;
+    background: #dde0d8 !important;
+    display: block !important;
+    text-align: left !important;
+  }
+
+  .gallery-row .gallery-photo img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 440px !important;
+    object-fit: contain !important;
+    display: block !important;
+    aspect-ratio: auto !important;
+  }
+
+  .gallery-row .gallery-photo span {
+    display: block !important;
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #202a2e !important;
+    background: #ffffff !important;
+  }
+
+  /* Quality & Mechanism Section (Dört Temel Fark): Full vertical detail photos, no tiny cropped boxes */
+  .quality-four {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  .quality-media {
+    width: 100% !important;
+    aspect-ratio: 4/5 !important;
+    max-height: 380px !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    background: #26343b !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  }
+
+  .quality-media .gallery-photo {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+
+  .quality-media .gallery-photo img,
+  .quality-media img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    display: block !important;
+    aspect-ratio: auto !important;
+    max-height: none !important;
+  }
+
+  .quality-copy h3 {
+    font-size: 23px !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    margin: 14px 0 8px !important;
+  }
+
+  .quality-copy p {
+    font-size: 14.5px !important;
+    line-height: 1.65 !important;
+    color: #b6c5ca !important;
+  }
+
+  .quality-service {
+    margin-top: 32px !important;
+    padding-top: 24px !important;
+  }
+
+  .quality-service strong {
+    font-size: 21px !important;
+    font-weight: 700 !important;
+    line-height: 1.35 !important;
+  }
+
+  .quality-service p {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    color: #a4b8bf !important;
+  }
+
+  .quality-service .button {
+    font-size: 14.5px !important;
+    font-weight: 700 !important;
+    min-height: 48px !important;
   }
 
   /* Model Detail Pages */
@@ -652,8 +826,7 @@ body.has-cookie-panel .whatsapp-float {
   .product-main-image {
     width: 100% !important;
     height: auto !important;
-    aspect-ratio: 4/3 !important;
-    max-height: 320px !important;
+    max-height: 400px !important;
     object-fit: contain !important;
     border-radius: 12px !important;
     background: #e7e4dc !important;
@@ -663,11 +836,12 @@ body.has-cookie-panel .whatsapp-float {
   .detail-photo-grid {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 8px !important;
-    margin-top: 12px !important;
+    gap: 10px !important;
+    margin-top: 14px !important;
   }
 
-  .gallery-photo img {
+  /* Scoped strictly to small detail thumbnails, not affecting other gallery photos */
+  .detail-photo-grid .gallery-photo img {
     width: 100% !important;
     height: auto !important;
     aspect-ratio: 1/1 !important;
@@ -676,11 +850,31 @@ body.has-cookie-panel .whatsapp-float {
     border-radius: 8px !important;
   }
 
+  /* Storefront Section in About Page */
+  .storefront-section {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .storefront-photo img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 380px !important;
+    object-fit: contain !important;
+    border-radius: 12px !important;
+  }
+
   /* Form & Interactive elements */
   .form input, .form select {
     font-size: 16px !important;
     padding: 14px 16px !important;
     border-radius: 8px !important;
+    min-height: 50px !important;
+  }
+
+  .form label {
+    font-size: 14px !important;
+    font-weight: 600 !important;
   }
 
   .form .button {
@@ -690,6 +884,7 @@ body.has-cookie-panel .whatsapp-float {
     border-radius: 8px !important;
   }
 
+  /* Craft & FAQ */
   .craft, .choose, .faq {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
@@ -698,9 +893,41 @@ body.has-cookie-panel .whatsapp-float {
   .craft img {
     width: 100% !important;
     height: auto !important;
-    aspect-ratio: 4/3 !important;
-    max-height: 300px !important;
+    max-height: 340px !important;
     object-fit: contain !important;
+    border-radius: 10px !important;
+  }
+
+  .faq-items summary {
+    font-size: 16.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.45 !important;
+    padding: 18px 0 !important;
+  }
+
+  .faq-items details p {
+    font-size: 15px !important;
+    line-height: 1.7 !important;
+    color: #46544e !important;
+  }
+
+  /* Closing section */
+  .closing h2 {
+    font-size: clamp(26px, 7vw, 34px) !important;
+    line-height: 1.2 !important;
+    font-weight: 700 !important;
+  }
+
+  .closing p {
+    font-size: 15px !important;
+    line-height: 1.65 !important;
+    color: #cbd5d8 !important;
+  }
+
+  .closing .actions .button {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    min-height: 50px !important;
     border-radius: 10px !important;
   }
 
@@ -710,16 +937,37 @@ body.has-cookie-panel .whatsapp-float {
     padding: 40px 0 110px !important;
   }
 
+  footer p, .footer-address {
+    font-size: 13.5px !important;
+    line-height: 1.6 !important;
+  }
+
+  .footer-directions {
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+  }
+
   footer .links {
     margin-top: 24px !important;
     flex-wrap: wrap !important;
     gap: 14px !important;
   }
 
+  footer .links a {
+    font-size: 14.5px !important;
+    font-weight: 600 !important;
+  }
+
   .footer-legal {
     display: flex !important;
     flex-wrap: wrap !important;
-    gap: 10px 14px !important;
+    gap: 12px 16px !important;
     margin-top: 18px !important;
   }
+
+  .footer-legal a, .footer-legal button {
+    font-size: 13.5px !important;
+    font-weight: 550 !important;
+  }
 }
+

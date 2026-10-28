@@ -65,6 +65,20 @@
   if('ResizeObserver' in window)new ResizeObserver(entries=>{width=entries[0].contentRect.width;if(!frame)frame=requestAnimationFrame(update)}).observe(gallery);
   else window.addEventListener('resize',()=>{width=gallery.clientWidth},{passive:true});
   card.querySelectorAll('[data-photo-step]').forEach(button=>button.addEventListener('click',()=>{width=gallery.clientWidth;const current=Math.round(gallery.scrollLeft/Math.max(1,width));const next=(current+Number(button.dataset.photoStep)+total)%total;gallery.scrollTo({left:next*width,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}));
+  let touchStartX=0,touchStartY=0;
+  gallery.addEventListener('touchstart',e=>{if(e.touches.length===1){touchStartX=e.touches[0].clientX;touchStartY=e.touches[0].clientY}},{passive:true});
+  gallery.addEventListener('touchend',e=>{
+   if(!touchStartX)return;
+   const diffX=e.changedTouches[0].clientX-touchStartX,diffY=e.changedTouches[0].clientY-touchStartY;
+   touchStartX=0;touchStartY=0;
+   if(Math.abs(diffX)>45&&Math.abs(diffX)>Math.abs(diffY)*1.5){
+    width=gallery.clientWidth;
+    const current=Math.round(gallery.scrollLeft/Math.max(1,width));
+    const direction=diffX<0?1:-1;
+    const next=(current+direction+total)%total;
+    gallery.scrollTo({left:next*width,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+   }
+  },{passive:true});
  });
  document.querySelectorAll('[data-quality-index]').forEach(slot=>{const item=cfg.qualityGallery?.[Number(slot.dataset.qualityIndex)];if(!item?.image)return;const b=document.createElement('button');b.className='gallery-photo';b.dataset.lightbox='/'+item.image;b.setAttribute('aria-label',item.title+' — görseli büyüt');const img=document.createElement('img');img.src='/'+item.image;img.alt=item.alt||item.title;img.loading='lazy';b.append(img);slot.replaceChildren(b)});
  document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('main-nav')?.classList.remove('mobile-open');document.querySelector('.menu-toggle')?.setAttribute('aria-expanded','false')}});
