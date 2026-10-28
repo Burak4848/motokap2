@@ -5,6 +5,8 @@
  document.querySelectorAll('[data-price]').forEach(el=>el.textContent=format(find(el.dataset.price)?.price));
  let consent='denied';try{consent=localStorage.getItem('motokap-measurement')||'unset'}catch{}
  let loaded=false;
+ const curSlug=location.pathname.split('/')[2],curModel=curSlug?find(curSlug):null;
+
  function loadMeasurement(){
   if(loaded||consent!=='granted')return;
   const ga4=(cfg.analytics?.ga4Id||'').trim();
@@ -33,7 +35,6 @@
       script.src='https://connect.facebook.net/en_US/fbevents.js';
       document.head.append(script);
       fbq('init',pixel);
-      fbq('track','PageView');
     }
   }
   if(/^[a-z0-9]{6,15}$/i.test(clarity)){
@@ -44,30 +45,44 @@
     })(window,document,'clarity','script',clarity);
   }
   loaded=true;
-  const slug=location.pathname.split('/')[2],m=find(slug);
-  if(m)track('product_view',{model:m.name,slug:m.slug,price:m.price});
+  if(window.fbq){
+    fbq('track','PageView');
+    if(curModel){
+      fbq('track','ViewContent',{
+        content_name:curModel.name,
+        content_category:'Motosiklet Garajı',
+        content_ids:[curModel.slug],
+        value:curModel.price,
+        currency:'TRY'
+      });
+    }
+  }
  }
- window.addEventListener('motokap:enquiry_ready',e=>track('whatsapp_click',e.detail));
+
  function track(name,data){
   window.dispatchEvent(new CustomEvent('motokap:'+name,{detail:data}));
+  if(consent!=='granted'||!loaded)return;
   if(window.fbq){
-   if(name==='product_view'){
-    const pData={content_ids:[data.slug],content_name:data.model,content_type:'product'};
-    if(data.price){pData.value=data.price;pData.currency='TRY';}
-    fbq('track','ViewContent',pData);
+   if(name==='whatsapp_click'){
+    fbq('track','Contact',{
+      content_name:data?.model||'WhatsApp İletişim',
+      contact_channel:'whatsapp'
+    });
+   } else if(name==='phone_click'){
+    fbq('track','Contact',{
+      content_name:'Telefon Arama',
+      contact_channel:'phone'
+    });
+   } else if(name==='form_submit'){
+    fbq('track','Lead',{
+      content_name:data?.model||'Model Seçim Talebi',
+      content_category:'Motosiklet Garajı'
+    });
    }
-   else if(name==='whatsapp_click'||name==='phone_click'||name==='form_submit'){
-    fbq('track','Contact',{content_name:data.model||'MOTOKAP',contact_channel:name==='phone_click'?'phone':'whatsapp'});
-    fbq('track','Lead',{content_name:data.model||'MOTOKAP',content_category:'motorcycle_garage'});
-   }
-   else fbq('trackCustom',name,data);
   }
-  if(consent!=='granted')return;
   if(window.gtag)gtag('event',name,data);
   if(window.clarity)clarity('event',name);
  }
- const curSlug=location.pathname.split('/')[2],curModel=curSlug?find(curSlug):null;
- if(curModel)track('product_view',{model:curModel.name,slug:curModel.slug,price:curModel.price});
  document.querySelectorAll('[data-wa]').forEach(a=>{
   const m=find(a.dataset.model),message=m?.template?'Merhaba, web sitenizdeki '+m.name+' hakkında bilgi almak istiyorum.':m?'Merhaba, '+m.name+' modelini web sitenizden inceledim. Güncel fiyat ve sipariş bilgisi almak istiyorum.':'Merhaba, MOTOKAP ürünleri hakkında bilgi almak istiyorum.';
   a.href='https://wa.me/'+cfg.phone+'?text='+encodeURIComponent(message);
