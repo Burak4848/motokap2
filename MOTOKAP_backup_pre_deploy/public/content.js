@@ -156,8 +156,7 @@ window.MOTOKAP = {
   },
   "sharedDetailPhotos": [
     "assets/web-7796c51a070c-1600.webp",
-    "assets/web-bbd6edec03bd-1600.webp",
-    "assets/web-875c7fd857d2-1600.webp"
+    "assets/web-bbd6edec03bd-1600.webp"
   ],
   "qualityGallery": [
     {
@@ -227,20 +226,7 @@ window.MOTOKAP = {
         "width": 1170
       }
     ],
-    "assets/web-875c7fd857d2-1600.webp": [
-      {
-        "src": "assets/web-875c7fd857d2-640.webp",
-        "width": 640
-      },
-      {
-        "src": "assets/web-875c7fd857d2-1000.webp",
-        "width": 1000
-      },
-      {
-        "src": "assets/web-875c7fd857d2-1600.webp",
-        "width": 1448
-      }
-    ],
+
     "assets/web-b04ad94cc295-1600.webp": [
       {
         "src": "assets/web-b04ad94cc295-640.webp",
