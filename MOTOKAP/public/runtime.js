@@ -21,18 +21,20 @@
     document.head.append(script);
   }
   if(/^\d+$/.test(pixel)){
-    window.fbq=function(){if(fbq.callMethod)fbq.callMethod.apply(fbq,arguments);else fbq.queue.push(arguments)};
-    window._fbq=window.fbq;
-    fbq.push=fbq;
-    fbq.queue=[];
-    fbq.loaded=true;
-    fbq.version='2.0';
-    const script=document.createElement('script');
-    script.async=true;
-    script.src='https://connect.facebook.net/en_US/fbevents.js';
-    document.head.append(script);
-    fbq('init',pixel);
-    fbq('track','PageView');
+    if(!window.fbq){
+      window.fbq=function(){if(fbq.callMethod)fbq.callMethod.apply(fbq,arguments);else fbq.queue.push(arguments)};
+      window._fbq=window.fbq;
+      fbq.push=fbq;
+      fbq.queue=[];
+      fbq.loaded=true;
+      fbq.version='2.0';
+      const script=document.createElement('script');
+      script.async=true;
+      script.src='https://connect.facebook.net/en_US/fbevents.js';
+      document.head.append(script);
+      fbq('init',pixel);
+      fbq('track','PageView');
+    }
   }
   if(/^[a-z0-9]{6,15}$/i.test(clarity)){
     (function(c,l,a,r,i,t,y){
@@ -43,10 +45,29 @@
   }
   loaded=true;
   const slug=location.pathname.split('/')[2],m=find(slug);
-  if(m)track('product_view',{model:m.name,slug:m.slug});
+  if(m)track('product_view',{model:m.name,slug:m.slug,price:m.price});
  }
  window.addEventListener('motokap:enquiry_ready',e=>track('whatsapp_click',e.detail));
- function track(name,data){window.dispatchEvent(new CustomEvent('motokap:'+name,{detail:data}));if(consent!=='granted')return;if(window.gtag)gtag('event',name,data);if(window.clarity)clarity('event',name);if(window.fbq){if(name==='product_view')fbq('track','ViewContent',{content_ids:[data.slug],content_name:data.model,content_type:'product'});else if(name==='whatsapp_click'||name==='phone_click')fbq('track','Contact',{content_name:data.model||'MOTOKAP',contact_channel:name==='phone_click'?'phone':'whatsapp'});else fbq('trackCustom',name,data)}}
+ function track(name,data){
+  window.dispatchEvent(new CustomEvent('motokap:'+name,{detail:data}));
+  if(window.fbq){
+   if(name==='product_view'){
+    const pData={content_ids:[data.slug],content_name:data.model,content_type:'product'};
+    if(data.price){pData.value=data.price;pData.currency='TRY';}
+    fbq('track','ViewContent',pData);
+   }
+   else if(name==='whatsapp_click'||name==='phone_click'||name==='form_submit'){
+    fbq('track','Contact',{content_name:data.model||'MOTOKAP',contact_channel:name==='phone_click'?'phone':'whatsapp'});
+    fbq('track','Lead',{content_name:data.model||'MOTOKAP',content_category:'motorcycle_garage'});
+   }
+   else fbq('trackCustom',name,data);
+  }
+  if(consent!=='granted')return;
+  if(window.gtag)gtag('event',name,data);
+  if(window.clarity)clarity('event',name);
+ }
+ const curSlug=location.pathname.split('/')[2],curModel=curSlug?find(curSlug):null;
+ if(curModel)track('product_view',{model:curModel.name,slug:curModel.slug,price:curModel.price});
  document.querySelectorAll('[data-wa]').forEach(a=>{
   const m=find(a.dataset.model),message=m?.template?'Merhaba, web sitenizdeki '+m.name+' hakkında bilgi almak istiyorum.':m?'Merhaba, '+m.name+' modelini web sitenizden inceledim. Güncel fiyat ve sipariş bilgisi almak istiyorum.':'Merhaba, MOTOKAP ürünleri hakkında bilgi almak istiyorum.';
   a.href='https://wa.me/'+cfg.phone+'?text='+encodeURIComponent(message);

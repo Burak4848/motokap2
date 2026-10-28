@@ -141,7 +141,7 @@ window.MOTOKAP = {
     }
   ],
   "analytics": {
-    "metaPixelId": "",
+    "metaPixelId": "1154228726979585",
     "ga4Id": "",
     "clarityId": ""
   },
