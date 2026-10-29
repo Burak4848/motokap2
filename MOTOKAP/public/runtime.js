@@ -1,7 +1,7 @@
 (() => {
  const cfg=window.MOTOKAP;
  const find=slug=>cfg.models.find(m=>m.slug===slug);
- const format=price=>Number.isFinite(price)?new Intl.NumberFormat('tr-TR',{style:'currency',currency:'TRY',maximumFractionDigits:0}).format(price):'Güncel fiyatı sorun';
+ const format=price=>Number.isFinite(price)?new Intl.NumberFormat('tr-TR',{maximumFractionDigits:0}).format(price)+' TL':'Güncel fiyatı sorun';
  document.querySelectorAll('[data-price]').forEach(el=>el.textContent=format(find(el.dataset.price)?.price));
  let consent='denied';try{consent=localStorage.getItem('motokap-measurement')||'unset'}catch{}
  let loaded=false;
