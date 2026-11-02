@@ -1385,3 +1385,19 @@ header .brand img.brand-mark{width:100%!important;height:100%!important;max-heig
  header .brand img.brand-mark{width:100%!important;height:100%!important;max-height:none!important}
  header .menu-toggle{flex-shrink:0!important}
 }
+
+/* Yalnızca kullanıcının paylaştığı orijinal logo: 1024x1024 dosyayı içerik alanına kırp.
+   Kaynak görselin çizgileri, harfleri ve sloganı değiştirilmez. */
+header a.brand, footer a.brand{position:relative!important;display:block!important;overflow:hidden!important;isolation:isolate}
+header a.brand img.brand-mark{
+ position:absolute!important;display:block!important;max-width:none!important;max-height:none!important;
+ width:125%!important;height:auto!important;aspect-ratio:1/1!important;
+ left:-12.5%!important;top:-27.5%!important;
+ object-fit:fill!important;mix-blend-mode:multiply!important;filter:none!important;
+}
+footer a.brand img.brand-mark{
+ position:absolute!important;display:block!important;max-width:none!important;max-height:none!important;
+ width:125%!important;height:auto!important;aspect-ratio:1/1!important;
+ left:-12.5%!important;top:-27.5%!important;
+ object-fit:fill!important;filter:invert(1)!important;mix-blend-mode:screen!important;
+}
