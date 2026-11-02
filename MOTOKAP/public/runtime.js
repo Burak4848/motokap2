@@ -1,7 +1,7 @@
 (() => {
  const cfg=window.MOTOKAP;
  const find=slug=>cfg.models.find(m=>m.slug===slug);
- const format=price=>Number.isFinite(price)?new Intl.NumberFormat('tr-TR',{style:'currency',currency:'TRY',maximumFractionDigits:0}).format(price):'Güncel fiyatı sorun';
+ const format=price=>Number.isFinite(price)?new Intl.NumberFormat('tr-TR',{maximumFractionDigits:0}).format(price)+' TL':'Güncel fiyatı sorun';
  document.querySelectorAll('[data-price]').forEach(el=>el.textContent=format(find(el.dataset.price)?.price));
  let consent='denied';try{consent=localStorage.getItem('motokap-measurement')||'unset'}catch{}
  let loaded=false;
@@ -160,5 +160,5 @@
  if('IntersectionObserver' in window){const io=new IntersectionObserver(list=>list.forEach(en=>{if(en.isIntersecting){once('section:'+en.target.id,'section_view',{section:en.target.id,page});io.unobserve(en.target)}}),{threshold:.4});document.querySelectorAll('main section[id]').forEach(sec=>io.observe(sec))}
  loadMeasurement();
  const schema={"@context": "https://schema.org", "@type": "Organization", "@id": "https://motokap.com/#motokap", "name": "MOTOKAP", "description": "Fethiye / Muğla merkezli katlanır motosiklet garajı üreticisi.", "url": "https://motokap.com/", "logo": "https://motokap.com/assets/web-cc97c4ad4b2b.webp", "telephone": "+90 533 240 38 88", "address": {"@type": "PostalAddress", "streetAddress": "Karaçulha Mahallesi, Atatürk Bulvarı No: 124/1", "addressLocality": "Fethiye", "addressRegion": "Muğla", "addressCountry": "TR"}, "sameAs": ["https://www.instagram.com/motokaptr/", "https://www.tiktok.com/@motokapstore", "https://share.google/t9Hn2Crw8fZ8bILBf"], "contactPoint": {"@type": "ContactPoint", "telephone": "+90 533 240 38 88", "contactType": "sales", "availableLanguage": "Turkish"}, "hasMap": "https://share.google/t9Hn2Crw8fZ8bILBf"};
- if(!['/iletisim/','/hakkimizda/'].includes(location.pathname)){const node=document.createElement('script');node.type='application/ld+json';node.textContent=JSON.stringify(schema);document.head.append(node)}
+ if(!['/','/iletisim/','/hakkimizda/'].includes(location.pathname)){const node=document.createElement('script');node.type='application/ld+json';node.textContent=JSON.stringify(schema);document.head.append(node)}
 })();
