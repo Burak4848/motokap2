@@ -1373,3 +1373,15 @@ dialog.lightbox .lightbox-nav button:focus-visible{outline:2px solid white!impor
 .seo-overview-links{display:flex;flex-wrap:wrap;gap:18px;margin-top:22px}
 .seo-overview-links a{font-size:13px;font-weight:650;text-decoration:underline;text-underline-offset:4px;color:#254039}
 @media(max-width:650px){.seo-overview{padding:38px 0}.seo-overview p{font-size:14px;line-height:1.8}.seo-overview-links{flex-direction:column;gap:15px}}
+
+/* 2026-11-02: Onaylı MOTOKAP logosu için okunaklı responsive kullanım */
+header .brand,footer .brand{overflow:visible!important}
+header .brand img.brand-mark,footer .brand img.brand-mark{object-fit:contain!important;object-position:center!important}
+header .brand{width:143px!important;height:92px!important;max-width:143px!important;max-height:92px!important;flex-shrink:0!important}
+header .brand img.brand-mark{width:100%!important;height:100%!important;max-height:none!important}
+@media(max-width:768px){
+ header{min-height:82px!important;max-height:none!important;align-items:center!important}
+ header .brand{width:112px!important;min-width:112px!important;height:72px!important;max-width:112px!important;max-height:72px!important}
+ header .brand img.brand-mark{width:100%!important;height:100%!important;max-height:none!important}
+ header .menu-toggle{flex-shrink:0!important}
+}
