@@ -1179,3 +1179,61 @@ img {
   }
 }
 
+
+
+/* Güvenli mobil günlük kullanım galerisi: ana ürün kartlarının CSS'i değişmez. */
+@media (max-width:650px) {
+  #galeri .gallery-row {
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    grid-template-columns:none!important;
+    grid-auto-flow:initial!important;
+    gap:12px!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    scroll-snap-type:x mandatory!important;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior-x:contain;
+    scrollbar-width:thin;
+  }
+  #galeri .gallery-row > .gallery-photo {
+    box-sizing:border-box!important;
+    flex:0 0 min(80vw,350px)!important;
+    width:min(80vw,350px)!important;
+    min-width:0!important;
+    scroll-snap-align:start;
+  }
+}
+dialog.lightbox .motokap-lightbox-controls {
+  position:fixed;
+  left:50%;
+  bottom:calc(16px + env(safe-area-inset-bottom));
+  transform:translateX(-50%);
+  z-index:100000;
+  display:flex;
+  gap:14px;
+  align-items:center;
+  justify-content:center;
+  padding:7px 12px;
+  border-radius:999px;
+  background:rgba(22,31,36,.92);
+  border:1px solid rgba(255,255,255,.25);
+  color:#fff;
+  font-size:13px;
+  white-space:nowrap;
+}
+dialog.lightbox .motokap-lightbox-controls[hidden]{display:none!important}
+dialog.lightbox .motokap-lightbox-controls button {
+  display:inline-flex!important;
+  position:static!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:44px!important;
+  min-height:44px!important;
+  padding:4px 12px!important;
+  border-radius:999px!important;
+  border:1px solid #ffffff55!important;
+  background:transparent!important;
+  color:#fff!important;
+  font-size:24px!important;
+}
