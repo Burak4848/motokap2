@@ -1,0 +1,92 @@
+[
+  {
+    "number": 1,
+    "source": "IMG_6514.jpeg",
+    "original_size": "1152x1536",
+    "display_size": "1152x1536",
+    "full": "01-xmax-arka-cantali-tam.webp",
+    "preview": "01-xmax-arka-cantali-onizleme.webp",
+    "caption": "XMAX · arka çantalı"
+  },
+  {
+    "number": 2,
+    "source": "IMG_5974.jpeg",
+    "original_size": "1152x1536",
+    "display_size": "1152x1536",
+    "full": "02-cantali-motosiklet-tam.webp",
+    "preview": "02-cantali-motosiklet-onizleme.webp",
+    "caption": "Çantalı motosiklet"
+  },
+  {
+    "number": 3,
+    "source": "IMG_7575.jpeg",
+    "original_size": "710x1536",
+    "display_size": "710x1259",
+    "full": "03-touring-motosiklet-tam.webp",
+    "preview": "03-touring-motosiklet-onizleme.webp",
+    "caption": "Touring motosiklet"
+  },
+  {
+    "number": 4,
+    "source": "IMG_7584.jpeg",
+    "original_size": "710x1536",
+    "display_size": "710x950",
+    "full": "04-xmax-park-alani-tam.webp",
+    "preview": "04-xmax-park-alani-onizleme.webp",
+    "caption": "XMAX · park alanı"
+  },
+  {
+    "number": 5,
+    "source": "IMG_7583.jpeg",
+    "original_size": "710x1536",
+    "display_size": "710x950",
+    "full": "05-yan-cantali-motosiklet-tam.webp",
+    "preview": "05-yan-cantali-motosiklet-onizleme.webp",
+    "caption": "Yan çantalı motosiklet"
+  },
+  {
+    "number": 6,
+    "source": "197175f7-ccb2-4cc6-9801-e293118c2456.jpeg",
+    "original_size": "1152x1536",
+    "display_size": "1152x1536",
+    "full": "06-adventure-katlanan-garaj-tam.webp",
+    "preview": "06-adventure-katlanan-garaj-onizleme.webp",
+    "caption": "Adventure motosiklet"
+  },
+  {
+    "number": 7,
+    "source": "15ad17e5-e514-4a25-aaf4-5db16c841c60.jpeg",
+    "original_size": "1152x1536",
+    "display_size": "1152x1536",
+    "full": "07-adventure-diger-aci-tam.webp",
+    "preview": "07-adventure-diger-aci-onizleme.webp",
+    "caption": "Adventure motosiklet"
+  },
+  {
+    "number": 8,
+    "source": "04587844-4C64-4385-B2EE-FA4D3448BBEF.jpeg",
+    "original_size": "1080x810",
+    "display_size": "1080x810",
+    "full": "08-scooter-park-alani-tam.webp",
+    "preview": "08-scooter-park-alani-onizleme.webp",
+    "caption": "Scooter · park alanı"
+  },
+  {
+    "number": 9,
+    "source": "3BF613C5-612B-4932-AEC4-1B7FC8C491FC.jpeg",
+    "original_size": "1080x1440",
+    "display_size": "1080x1440",
+    "full": "09-kapali-garaj-tam.webp",
+    "preview": "09-kapali-garaj-onizleme.webp",
+    "caption": "Kapalı MOTOKAP"
+  },
+  {
+    "number": 10,
+    "source": "19e9efea-c501-4272-a59c-d692e4eccb13.jpeg",
+    "original_size": "1152x1536",
+    "display_size": "1152x1536",
+    "full": "10-maxi-scooter-tam.webp",
+    "preview": "10-maxi-scooter-onizleme.webp",
+    "caption": "Maxi scooter"
+  }
+]

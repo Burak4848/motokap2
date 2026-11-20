@@ -57,7 +57,7 @@ window.MOTOKAP = {
       "w": 180,
       "h": 175,
       "l": 350,
-      "poles": null,
+      "poles": 5,
       "price": 19990,
       "image": "assets/web-81c32d6061c9-1600.webp",
       "alt": "MOTOKAP İki Motosikletlik / ATV'lik gerçek ürün ve kullanım görünümü",
