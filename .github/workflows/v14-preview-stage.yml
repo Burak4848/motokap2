@@ -5,6 +5,7 @@ on:
       - release/motokap-v14-kontrol-20261120
     paths:
       - 'release-artifacts/v14-package.part*'
+      - '.github/workflows/v14-preview-stage.yml'
 permissions:
   contents: write
 jobs:
@@ -12,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout preview branch
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9e4c32 # v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
       - name: Verify ZIP and apply V14 overlay
