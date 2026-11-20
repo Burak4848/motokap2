@@ -1,0 +1,85 @@
+name: MOTOKAP V14 deep live audit
+on:
+  push:
+    branches:
+      - release/motokap-v14-kontrol-20261120
+    paths:
+      - '.github/workflows/v14-deep-live-audit.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify all live pages and 84 assets
+        run: |
+          python3 - <<'PY'
+          import urllib.request, urllib.error, urllib.parse, json, re, sys, time, xml.etree.ElementTree as ET
+          from html import unescape
+          base='https://www.motokap.com'
+          assets=["/assets/motokap-v14/buyuk-boy/01-bmw-gs-studyo-sm.webp","/assets/motokap-v14/buyuk-boy/01-bmw-gs-studyo.webp","/assets/motokap-v14/buyuk-boy/02-touring-studyo-sm.webp","/assets/motokap-v14/buyuk-boy/02-touring-studyo.webp","/assets/motokap-v14/buyuk-boy/03-orta-buyuk-gercek-kullanim-sm.webp","/assets/motokap-v14/buyuk-boy/03-orta-buyuk-gercek-kullanim.webp","/assets/motokap-v14/buyuk-boy/04-goldwing-gercek-kullanim-yazili-sm.webp","/assets/motokap-v14/buyuk-boy/04-goldwing-gercek-kullanim-yazili.webp","/assets/motokap-v14/galeri-standart/buyuk-boy--01-bmw-gs-studyo.webp","/assets/motokap-v14/galeri-standart/buyuk-boy--02-touring-studyo.webp","/assets/motokap-v14/galeri-standart/buyuk-boy--03-orta-buyuk-gercek-kullanim.webp","/assets/motokap-v14/galeri-standart/buyuk-boy--04-goldwing-gercek-kullanim-yazili.webp","/assets/motokap-v14/galeri-standart/iki-motosiklet-atv--01-canam-studyo.webp","/assets/motokap-v14/galeri-standart/iki-motosiklet-atv--02-kapali-studyo.webp","/assets/motokap-v14/galeri-standart/iki-motosiklet-atv--03-iki-motosiklet-gercek-kullanim-yazili.webp","/assets/motokap-v14/galeri-standart/orta-boy--01-sr450-studyo.webp","/assets/motokap-v14/galeri-standart/orta-boy--02-mt07-studyo.webp","/assets/motokap-v14/galeri-standart/orta-boy--03-orta-buyuk-gercek-kullanim.webp","/assets/motokap-v14/galeri-standart/orta-boy--04-r7-gercek-kullanim-yazili.webp","/assets/motokap-v14/galeri-standart/ortak-teknik--01-miflonlu-deri-kumas.webp","/assets/motokap-v14/galeri-standart/ortak-teknik--02-cnc-celik-mekanizma.webp","/assets/motokap-v14/galeri-standart/ortak-teknik--03-miflonlu-ic-yuzey.webp","/assets/motokap-v14/galeri-standart/ortak-teknik--04-cirt-dikisli-baglantilar.webp","/assets/motokap-v14/hero/hero-mobil-buyuk-kapali-sm.webp","/assets/motokap-v14/hero/hero-mobil-buyuk-kapali.webp","/assets/motokap-v14/hero/hero-pc-orta-buyuk-sm.webp","/assets/motokap-v14/hero/hero-pc-orta-buyuk.webp","/assets/motokap-v14/iki-motosiklet-atv/01-canam-studyo-sm.webp","/assets/motokap-v14/iki-motosiklet-atv/01-canam-studyo.webp","/assets/motokap-v14/iki-motosiklet-atv/02-kapali-studyo-sm.webp","/assets/motokap-v14/iki-motosiklet-atv/02-kapali-studyo.webp","/assets/motokap-v14/iki-motosiklet-atv/03-iki-motosiklet-gercek-kullanim-yazili-sm.webp","/assets/motokap-v14/iki-motosiklet-atv/03-iki-motosiklet-gercek-kullanim-yazili.webp","/assets/motokap-v14/logo-transparent.svg","/assets/motokap-v14/logo.svg","/assets/motokap-v14/magaza-fethiye-1000.webp","/assets/motokap-v14/magaza-fethiye-1600.webp","/assets/motokap-v14/orta-boy/01-sr450-studyo-sm.webp","/assets/motokap-v14/orta-boy/01-sr450-studyo-th.webp","/assets/motokap-v14/orta-boy/01-sr450-studyo.webp","/assets/motokap-v14/orta-boy/02-mt07-studyo-sm.webp","/assets/motokap-v14/orta-boy/02-mt07-studyo-th.webp","/assets/motokap-v14/orta-boy/02-mt07-studyo.webp","/assets/motokap-v14/orta-boy/03-orta-buyuk-gercek-kullanim-sm.webp","/assets/motokap-v14/orta-boy/03-orta-buyuk-gercek-kullanim-th.webp","/assets/motokap-v14/orta-boy/03-orta-buyuk-gercek-kullanim.webp","/assets/motokap-v14/orta-boy/04-r7-gercek-kullanim-yazili-sm.webp","/assets/motokap-v14/orta-boy/04-r7-gercek-kullanim-yazili-th.webp","/assets/motokap-v14/orta-boy/04-r7-gercek-kullanim-yazili.webp","/assets/motokap-v14/ortak-teknik/01-miflonlu-deri-kumas-sm.webp","/assets/motokap-v14/ortak-teknik/01-miflonlu-deri-kumas-th.webp","/assets/motokap-v14/ortak-teknik/01-miflonlu-deri-kumas.webp","/assets/motokap-v14/ortak-teknik/02-cnc-celik-mekanizma-sm.webp","/assets/motokap-v14/ortak-teknik/02-cnc-celik-mekanizma-th.webp","/assets/motokap-v14/ortak-teknik/02-cnc-celik-mekanizma.webp","/assets/motokap-v14/ortak-teknik/03-miflonlu-ic-yuzey-sm.webp","/assets/motokap-v14/ortak-teknik/03-miflonlu-ic-yuzey-th.webp","/assets/motokap-v14/ortak-teknik/03-miflonlu-ic-yuzey.webp","/assets/motokap-v14/ortak-teknik/04-cirt-dikisli-baglantilar-sm.webp","/assets/motokap-v14/ortak-teknik/04-cirt-dikisli-baglantilar-th.webp","/assets/motokap-v14/ortak-teknik/04-cirt-dikisli-baglantilar.webp","/assets/motokap-v14/premium-mevcut/premium-xl.webp","/assets/motokap-v14/premium-mevcut/premium-xxl.webp","/assets/motokap-v14/sizden-gelenler/01-xmax-arka-cantali-onizleme.webp","/assets/motokap-v14/sizden-gelenler/01-xmax-arka-cantali-tam.webp","/assets/motokap-v14/sizden-gelenler/02-cantali-motosiklet-onizleme.webp","/assets/motokap-v14/sizden-gelenler/02-cantali-motosiklet-tam.webp","/assets/motokap-v14/sizden-gelenler/03-touring-motosiklet-onizleme.webp","/assets/motokap-v14/sizden-gelenler/03-touring-motosiklet-tam.webp","/assets/motokap-v14/sizden-gelenler/04-xmax-park-alani-onizleme.webp","/assets/motokap-v14/sizden-gelenler/04-xmax-park-alani-tam.webp","/assets/motokap-v14/sizden-gelenler/05-yan-cantali-motosiklet-onizleme.webp","/assets/motokap-v14/sizden-gelenler/05-yan-cantali-motosiklet-tam.webp","/assets/motokap-v14/sizden-gelenler/06-adventure-katlanan-garaj-onizleme.webp","/assets/motokap-v14/sizden-gelenler/06-adventure-katlanan-garaj-tam.webp","/assets/motokap-v14/sizden-gelenler/07-adventure-diger-aci-onizleme.webp","/assets/motokap-v14/sizden-gelenler/07-adventure-diger-aci-tam.webp","/assets/motokap-v14/sizden-gelenler/08-scooter-park-alani-onizleme.webp","/assets/motokap-v14/sizden-gelenler/08-scooter-park-alani-tam.webp","/assets/motokap-v14/sizden-gelenler/09-kapali-garaj-onizleme.webp","/assets/motokap-v14/sizden-gelenler/09-kapali-garaj-tam.webp","/assets/motokap-v14/sizden-gelenler/10-maxi-scooter-onizleme.webp","/assets/motokap-v14/sizden-gelenler/10-maxi-scooter-tam.webp","/assets/motokap-v14/sizden-gelenler/fotograf-listesi.json"]
+          pages=["/cayma-bildirimi/","/cerezler/","/gizlilik/","/hakkimizda/","/iade/","/iletisim/","/","/kvkk/","/mesafeli-satis-sozlesmesi/","/modeller/altinci-model/","/modeller/besinci-model/","/modeller/buyuk-boy/","/modeller/iki-motosiklet-atv/","/modeller/","/modeller/orta-boy/","/modeller/premium-xl/","/on-bilgilendirme/","/rehber/branda-karsilastirma/","/rehber/cantali-motosiklet/","/rehber/garaj-nedir/","/rehber/iki-motosiklet-atv/","/rehber/","/rehber/kurulum/","/rehber/malzeme/","/rehber/maxi-scooter/","/rehber/model-secimi/","/siparis-bilgileri/","/sss/"]
+          fail=[]; warn=[]; total=0
+          def get(path):
+           req=urllib.request.Request(base+path,headers={'User-Agent':'MOTOKAP-post-release-QA/1.0','Cache-Control':'no-cache'})
+           with urllib.request.urlopen(req,timeout=20) as r:
+            return r.status,r.geturl(),r.read(),r.headers
+          for path in pages:
+           try:
+            status,url,body,headers=get(path+'?audit=v14-c327')
+            txt=body.decode('utf-8','replace')
+            old=path in ('/modeller/altinci-model/','/rehber/kurulum/','/modeller/besinci-model/','/modeller/premium-xl/')
+            title=bool(re.search(r'<title[^>]*>[^<]{10,}</title>',txt,re.I))
+            h1=len(re.findall(r'<h1(?:\\s|>)',txt,re.I))
+            canon=re.search(r'<link[^>]+rel=[\"\']canonical[\"\'][^>]+href=[\"\']([^\"\']+)',txt,re.I)
+            v14=not old
+            good=status==200 and title and (h1==1 or old) and (bool(canon) or old)
+            if path=='/':good=good and 'site-v14.js' in txt and 'site-v14.css' in txt and 'KATLANIR MOTOSİKLET GARAJI' in txt
+            if path in ('/modeller/orta-boy/','/modeller/buyuk-boy/','/modeller/iki-motosiklet-atv/'): good=good and 'data-wa-order' in txt
+            if v14 and '<meta name="robots" content="noindex' in txt.lower() and path in ('/','/modeller/orta-boy/','/modeller/buyuk-boy/','/modeller/iki-motosiklet-atv/'):good=False
+            if not good:fail.append('PAGE '+path+' status='+str(status)+' title='+str(title)+' h1='+str(h1)+' canonical='+str(bool(canon)))
+            if canon and not canon.group(1).startswith('https://www.motokap.com/'):warn.append('Non-www canonical '+path+' '+canon.group(1))
+            total+=1
+            print('PAGE', 'PASS' if good else 'FAIL', path, 'bytes',len(body),flush=True)
+           except Exception as e:fail.append('PAGE '+path+' '+str(e));print('PAGE ERROR',path,str(e),flush=True)
+          for path in assets:
+           try:
+            status,url,body,headers=get(path+'?audit=v14-c327')
+            kind='webp' if path.endswith('.webp') else 'svg' if path.endswith('.svg') else 'json'
+            good=status==200 and len(body)>50 and (kind!='webp' or body[:4]==b'RIFF')
+            if not good:fail.append('ASSET '+path+' status='+str(status)+' length='+str(len(body)))
+            total+=1
+            if not good or 'sizden-gelenler/' in path:print('ASSET', 'PASS' if good else 'FAIL',path,'bytes',len(body),flush=True)
+           except Exception as e:fail.append('ASSET '+path+' '+str(e));print('ASSET ERROR',path,str(e),flush=True)
+          for path in ('/site-v14.js','/site-measurement-v14.js','/content.js','/site-v14.css','/robots.txt','/sitemap.xml'):
+           try:
+            status,url,body,headers=get(path+'?audit=v14-c327')
+            text=body.decode('utf-8','replace')
+            good=status==200 and len(body)>40
+            if path=='/site-v14.js':good=good and 'sipariş oluşturmak istiyorum' in text and 'data-wa-order' in text
+            if path=='/site-measurement-v14.js':good=good and 'motokap-measurement' in text and 'consent' in text
+            if path=='/content.js':good=good and '1154228726979585' in text
+            if path=='/sitemap.xml':
+             try:
+              urls=ET.fromstring(body).findall('.//{http://www.sitemaps.org/schemas/sitemap/0.9}loc')
+              good=good and len(urls)>=19
+              for loc in urls:
+               if not loc.text.startswith('https://www.motokap.com/'):warn.append('SITEMAP domain mismatch '+str(loc.text))
+             except Exception as e:good=False;warn.append('SITEMAP xml '+str(e))
+            if path=='/robots.txt':good=good and 'Sitemap:' in text and 'Disallow: /' not in text
+            if not good:fail.append('STATIC '+path+' status='+str(status))
+            total+=1
+            print('STATIC','PASS' if good else 'FAIL',path,len(body),flush=True)
+           except Exception as e:fail.append('STATIC '+path+' '+str(e))
+          try:
+            req=urllib.request.Request(base+'/modeller/xxl/',headers={'User-Agent':'MOTOKAP-post-release-QA/1.0'})
+            with urllib.request.urlopen(req,timeout=20) as res:
+             ok=res.status==200 and '/modeller/iki-motosiklet-atv/' in res.url
+             if not ok:fail.append('LEGACY REDIRECT '+res.url)
+             print('REDIRECT','PASS' if ok else 'FAIL',res.url,flush=True)
+          except Exception as e:fail.append('LEGACY REDIRECT '+str(e))
+          print('DEEP_AUDIT_SUMMARY: ',total,'URLs inspected; FAILS=',len(fail),'WARNINGS=',len(warn),flush=True)
+          for item in fail:print('FAIL:',item,flush=True)
+          for item in warn:print('WARN:',item,flush=True)
+          if fail:sys.exit(1)
+          PY
