@@ -62,8 +62,13 @@
   ],
   "redirects": [
     {
+      "source": "/modeller/xxl/",
+      "destination": "/modeller/iki-motosiklet-atv/",
+      "permanent": true
+    },
+    {
       "source": "/modeller/xxl",
-      "destination": "/modeller/iki-motosiklet-atv",
+      "destination": "/modeller/iki-motosiklet-atv/",
       "permanent": true
     }
   ]
