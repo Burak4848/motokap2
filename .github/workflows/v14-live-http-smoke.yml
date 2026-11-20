@@ -1,0 +1,71 @@
+name: MOTOKAP V14 live HTTP smoke
+on:
+  push:
+    branches:
+      - release/motokap-v14-kontrol-20261120
+    paths:
+      - '.github/workflows/v14-live-http-smoke.yml'
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test live domain pages images and redirects
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import html, re, sys, time, urllib.error, urllib.request
+          base = 'https://www.motokap.com'
+          cases = [
+              ('/', 'KATLANIR MOTOSİKLET GARAJI'),
+              ('/modeller/', 'Modeller'),
+              ('/modeller/orta-boy/', 'Orta Boy'),
+              ('/modeller/buyuk-boy/', 'Büyük Boy'),
+              ('/modeller/iki-motosiklet-atv/', 'İki Motosikletlik'),
+              ('/modeller/premium-xl/', 'Premium XL'),
+              ('/modeller/besinci-model/', 'Premium XXL'),
+              ('/rehber/', 'rehber'),
+              ('/iletisim/', 'MOTOKAP'),
+              ('/site-v14.css', None),
+              ('/site-v14.js', None),
+              ('/site-measurement-v14.js', None),
+              ('/assets/motokap-v14/hero/hero-pc-orta-buyuk.webp', None),
+              ('/robots.txt', None),
+              ('/sitemap.xml', None),
+          ]
+          fails = []
+          def fetch(path):
+              req = urllib.request.Request(base+path, headers={'User-Agent':'MOTOKAP-release-smoke/1.0','Cache-Control':'no-cache'})
+              with urllib.request.urlopen(req,timeout=20) as res:
+                  return res.status,res.geturl(),res.read(),res.headers
+          for path, expected in cases:
+              try:
+                  status,url,data,headers = fetch(path+'?v14=b23fdf7')
+                  flat=html.unescape(re.sub(r'<[^>]+>',' ',data.decode('utf-8','replace')))
+                  ok=status==200 and (expected is None or expected.casefold() in flat.casefold())
+                  if path=='/':
+                      ok=ok and b'site-v14.css' in data and b'site-v14.js' in data and b'noindex' not in data.lower()
+                  if path.endswith('.webp'): ok=ok and data[:4]==b'RIFF'
+                  if path.endswith('.css') or path.endswith('.js'): ok=ok and len(data)>100
+                  print(('PASS' if ok else 'FAIL'),status,path,len(data),'bytes','final',url,flush=True)
+                  if not ok: fails.append(path)
+              except Exception as e:
+                  print('ERROR',path,str(e),flush=True)
+                  fails.append(path)
+          try:
+              status,url,data,headers=fetch('/modeller/xxl/?v14=b23fdf7')
+              ok=status==200 and '/modeller/iki-motosiklet-atv/' in url
+              print(('PASS' if ok else 'FAIL'),'OLD XXL REDIRECT',status,url,flush=True)
+              if not ok: fails.append('legacy-xxl')
+          except Exception as e:
+              print('ERROR old XXL',str(e),flush=True)
+              fails.append('legacy-xxl')
+          try:
+              fetch('/hatalisayfa-v14-test-4821/')
+              print('WARN Unknown path did not return 404',flush=True)
+          except urllib.error.HTTPError as e:
+              print(('PASS' if e.code==404 else 'WARN'),'UNKNOWN PATH',e.code,flush=True)
+          print('SUMMARY',len(cases),'checks, failures:',fails,flush=True)
+          if fails: sys.exit(1)
+          PY
