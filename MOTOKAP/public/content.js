@@ -151,7 +151,7 @@ window.MOTOKAP = {
     "detailImages": []
   },
   "seo": {
-    "siteUrl": "https://motokap.com",
+    "siteUrl": "https://www.motokap.com",
     "googleSiteVerification": ""
   },
   "sharedDetailPhotos": [

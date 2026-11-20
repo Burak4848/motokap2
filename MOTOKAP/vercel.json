@@ -70,6 +70,66 @@
       "source": "/modeller/xxl",
       "destination": "/modeller/iki-motosiklet-atv/",
       "permanent": true
+    },
+    {
+      "source": "/motokap-orta",
+      "destination": "/modeller/orta-boy/",
+      "permanent": true
+    },
+    {
+      "source": "/motokap-orta/",
+      "destination": "/modeller/orta-boy/",
+      "permanent": true
+    },
+    {
+      "source": "/motokap-buyuk",
+      "destination": "/modeller/buyuk-boy/",
+      "permanent": true
+    },
+    {
+      "source": "/motokap-buyuk/",
+      "destination": "/modeller/buyuk-boy/",
+      "permanent": true
+    },
+    {
+      "source": "/motokap-ikili",
+      "destination": "/modeller/iki-motosiklet-atv/",
+      "permanent": true
+    },
+    {
+      "source": "/motokap-ikili/",
+      "destination": "/modeller/iki-motosiklet-atv/",
+      "permanent": true
+    },
+    {
+      "source": "/urunler",
+      "destination": "/modeller/",
+      "permanent": true
+    },
+    {
+      "source": "/urunler/",
+      "destination": "/modeller/",
+      "permanent": true
+    },
+    {
+      "source": "/galeri",
+      "destination": "/#kullanim",
+      "permanent": true
+    },
+    {
+      "source": "/galeri/",
+      "destination": "/#kullanim",
+      "permanent": true
+    },
+    {
+      "source": "/modeller/altinci-model",
+      "destination": "/modeller/",
+      "permanent": true
+    },
+    {
+      "source": "/modeller/altinci-model/",
+      "destination": "/modeller/",
+      "permanent": true
     }
   ]
 }
