@@ -44,6 +44,9 @@
     if(window.gtag)window.gtag('event',name,data);
     if(window.clarity)window.clarity('event',name);
   }
+  // The model consultation form navigates directly to WhatsApp (no anchor click).
+  // Count that as Contact intent, not a completed order or qualified Lead.
+  window.addEventListener('motokap:fit_whatsapp_click',e=>measure('whatsapp_click',e.detail||{page:current,model:'Model seçim formu'}));
   document.addEventListener('click',e=>{
     const link=e.target.closest('a');if(!link)return;
     // Do not preempt the existing V14 click handler or replace the WhatsApp message.
