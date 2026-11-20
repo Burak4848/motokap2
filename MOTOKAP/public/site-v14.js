@@ -231,7 +231,7 @@
       const details=($('#fit-details')?.value||'').trim();
       const model=($('#fit-model')?.value||'').trim();
       const msg=ORDER_START+' Motosikletim: '+motor+'. '+(details?'Aksesuar / park alanı: '+details+'. ':'')+(model?'İlgilendiğim model: '+model+'. ':'')+'Motosikletime uygun garaj ölçüsünü ve sipariş detaylarını teyit etmek istiyorum.';
-      if(preview){say(msg)}else{window.location.assign(waUrl(msg))}
+      if(preview){say(msg)}else{window.dispatchEvent(new CustomEvent('motokap:fit_whatsapp_click',{detail:{model:model||'Model seçim formu',page:location.pathname}}));window.location.assign(waUrl(msg))}
     });
     $('#fit-motor')?.addEventListener('input',e=>e.target.setCustomValidity(''));
   }
