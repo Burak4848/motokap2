@@ -17,10 +17,28 @@ jobs:
           python3 -m playwright install --with-deps chromium
       - name: Test the public website across mobile and desktop
         run: python3 MOTOKAP/tools/v14_browser_qa.py
+      - name: Lighthouse mobile performance and SEO
+        run: |
+          export CHROME_PATH="$(python3 -c 'from playwright.sync_api import sync_playwright; p=sync_playwright().start(); print(p.chromium.executable_path); p.stop()')"
+          echo "Chrome: $CHROME_PATH"
+          mkdir -p lighthouse-reports
+          npx --yes lighthouse@latest https://www.motokap.com/ --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --only-categories=performance,accessibility,best-practices,seo --form-factor=mobile --output=json --output-path=lighthouse-reports/home-mobile.json --quiet
+          npx --yes lighthouse@latest https://www.motokap.com/modeller/orta-boy/ --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --only-categories=performance,accessibility,best-practices,seo --form-factor=mobile --output=json --output-path=lighthouse-reports/orta-mobile.json --quiet
+          python3 - <<'PY'
+          import json
+          for path in ['lighthouse-reports/home-mobile.json','lighthouse-reports/orta-mobile.json']:
+              d=json.load(open(path))
+              scores={k:round(v.get('score',0)*100) for k,v in d['categories'].items()}
+              metrics={k:d['audits'][k].get('displayValue') for k in ['first-contentful-paint','largest-contentful-paint','total-blocking-time','cumulative-layout-shift','speed-index'] if k in d['audits']}
+              savings=sorted([(round(a.get('details',{}).get('overallSavingsMs',0)),key,a.get('title','')) for key,a in d['audits'].items() if isinstance(a.get('details'),dict) and a['details'].get('overallSavingsMs',0)>0],reverse=True)[:8]
+              print('LIGHTHOUSE',path,'scores=',scores,'metrics=',metrics,'opportunities=',savings)
+          PY
       - name: Save screenshots for QA
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: motokap-v14-browser-qa
-          path: browser-screenshots/
+          path: |
+            browser-screenshots/
+            lighthouse-reports/
           if-no-files-found: ignore
