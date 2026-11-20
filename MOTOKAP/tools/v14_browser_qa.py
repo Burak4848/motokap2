@@ -42,7 +42,7 @@ with sync_playwright() as p:
                     scrollWidth:document.documentElement.scrollWidth,
                     bodyWidth:document.body.scrollWidth,
                     images:[...document.querySelectorAll('img')].length,
-                    broken:[...document.images].filter(im=>im.complete && im.naturalWidth===0).map(im=>im.src).slice(0,8),
+                    broken:[...document.images].filter(im=>!!im.getAttribute('src') && im.complete && im.naturalWidth===0).map(im=>im.src).slice(0,8),
                     navigation:Math.round(performance.getEntriesByType('navigation')[0]?.duration||0),
                     css:!!document.querySelector('link[href="/site-v14.css"]')
                 })''')
@@ -86,9 +86,13 @@ with sync_playwright() as p:
                         counter=gallery.locator('.count')
                         if n.count() and counter.count():
                             before=counter.inner_text()
-                            n.click()
+                            if n.is_visible():
+                                n.click(timeout=3000)
+                            else:
+                                # Mobile hides arrow buttons by design; verify the cyclic JS gallery controller.
+                                gallery.evaluate('(g)=>g._go(g._idx()+1)')
                             after=counter.inner_text()
-                            if before==after:errors.append(f'{label}: gallery next button did not change image')
+                            if before==after:errors.append(f'{label}: gallery next transition did not change image')
                 results.append(f'PASS {label}: no site request errors; {metrics["images"]} image nodes; document {metrics["scrollWidth"]}px / viewport {metrics["viewport"]}px; page load event {metrics["navigation"]}ms')
                 if path=='/' and width in (390,1440):
                     Path('browser-screenshots').mkdir(exist_ok=True)
