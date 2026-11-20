@@ -1,0 +1,29 @@
+name: MOTOKAP V14 redirect preview smoke
+on:
+  push:
+    branches:
+      - fix/v14-legacy-redirect-20261120
+    paths:
+      - '.github/workflows/v14-redirect-preview-smoke.yml'
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check V14 preview routes and redirects
+        run: |
+          python3 - <<'PY'
+          import urllib.request,urllib.error
+          sites=['https://motokap2-git-fix-v14-legacy-redirect-20261120-burakenesonaran.vercel.app','https://motokap2-vw7a-git-fix-v14-legacy-redirec-257802-burakenesonaran.vercel.app']
+          for site in sites:
+           print('PREVIEW',site,flush=True)
+           for path in ['/','/modeller/xxl/','/modeller/xxl','/modeller/iki-motosiklet-atv/']:
+            req=urllib.request.Request(site+path,headers={'User-Agent':'MOTOKAP-preview-check'})
+            try:
+             with urllib.request.urlopen(req,timeout=20) as resp:
+              body=resp.read()
+              print(path,'status',resp.status,'final',resp.url,'bytes',len(body),'v14',b'site-v14' in body,flush=True)
+            except Exception as e:
+             print(path,'ERROR',str(e),flush=True)
+          PY
