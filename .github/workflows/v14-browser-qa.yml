@@ -1,0 +1,26 @@
+name: MOTOKAP V14 browser and mobile QA
+on:
+  push:
+    branches: [qa/v14-browser-20261120]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install browser testing tools
+        run: |
+          python3 -m pip install --quiet --break-system-packages playwright
+          python3 -m playwright install --with-deps chromium
+      - name: Test the public website across mobile and desktop
+        run: python3 MOTOKAP/tools/v14_browser_qa.py
+      - name: Save screenshots for QA
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: motokap-v14-browser-qa
+          path: browser-screenshots/
+          if-no-files-found: ignore
