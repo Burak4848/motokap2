@@ -1,0 +1,26 @@
+name: MOTOKAP V14 site QA
+on:
+  push:
+    branches:
+      - main
+      - audit/v14-trafik-seo-20261120
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static-site-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9e4c32 # v4.2.2
+      - name: Verify all site routes and metadata
+        run: python3 MOTOKAP/tools/v14_site_audit.py
+      - name: Verify JavaScript parse
+        run: |
+          node --check MOTOKAP/public/site-v14.js
+          node --check MOTOKAP/public/site-measurement-v14.js
+          node --check MOTOKAP/public/content.js
+          node --check MOTOKAP/public/runtime.js
+          node --check MOTOKAP/public/sales.js
